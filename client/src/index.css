@@ -1,0 +1,273 @@
+/*
+ * DESIGN SYSTEM: "Structured Intelligence"
+ * Philosophy: Neo-Brutalist academic precision meets ML/Finance aesthetics
+ * Colors: Warm off-white bg, deep slate-navy text, academic blue accent
+ * Typography: Lora (serif display) + Inter (body) + JetBrains Mono (technical)
+ * Layout: Fixed left sidebar + scrollable right content
+ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-serif: 'Lora', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+:root {
+  --radius: 0.5rem;
+  /* Academic Blue accent system */
+  --primary: oklch(0.38 0.12 255);          /* #2E4A8F deep academic blue */
+  --primary-foreground: oklch(0.98 0 0);
+  --primary-light: oklch(0.55 0.12 255);    /* #5B8DD9 lighter blue */
+  /* Warm off-white background */
+  --background: oklch(0.985 0.003 80);      /* #FAFAF8 warm near-white */
+  --foreground: oklch(0.2 0.02 255);        /* #1C2333 deep slate-navy */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.02 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.02 255);
+  --secondary: oklch(0.96 0.005 255);
+  --secondary-foreground: oklch(0.3 0.02 255);
+  --muted: oklch(0.94 0.005 255);
+  --muted-foreground: oklch(0.52 0.015 255); /* #6B7280 gray for metadata */
+  --accent: oklch(0.94 0.01 255);
+  --accent-foreground: oklch(0.2 0.02 255);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.985 0 0);
+  --border: oklch(0.9 0.008 255);
+  --input: oklch(0.9 0.008 255);
+  --ring: oklch(0.38 0.12 255);
+  /* Sidebar specific */
+  --sidebar-bg: oklch(0.17 0.03 255);       /* Deep navy sidebar */
+  --sidebar-text: oklch(0.88 0.01 255);
+  --sidebar-muted: oklch(0.6 0.02 255);
+  --sidebar-accent: oklch(0.55 0.12 255);
+  --sidebar-border: oklch(0.25 0.03 255);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  a[href],
+  select:not(:disabled) {
+    @apply cursor-pointer;
+  }
+  ::selection {
+    background-color: oklch(0.38 0.12 255 / 0.15);
+    color: oklch(0.2 0.02 255);
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+
+  /* Section heading with blue left-border accent */
+  .section-heading {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: oklch(0.2 0.02 255);
+    padding-left: 1rem;
+    border-left: 3px solid oklch(0.38 0.12 255);
+    margin-bottom: 2rem;
+  }
+
+  /* Monospace label for tags, years, metadata */
+  .mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* Research / paper card */
+  .paper-card {
+    background: white;
+    border: 1px solid oklch(0.9 0.008 255);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .paper-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: oklch(0.38 0.12 255);
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+    transform-origin: bottom;
+  }
+  .paper-card:hover {
+    box-shadow: 0 4px 20px oklch(0.38 0.12 255 / 0.1);
+    transform: translateY(-2px);
+    border-color: oklch(0.38 0.12 255 / 0.3);
+  }
+  .paper-card:hover::before {
+    transform: scaleY(1);
+  }
+
+  /* Tag chip */
+  .tag-chip {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 0.2rem 0.6rem;
+    border-radius: 0.25rem;
+    background: oklch(0.38 0.12 255 / 0.08);
+    color: oklch(0.38 0.12 255);
+    border: 1px solid oklch(0.38 0.12 255 / 0.2);
+    letter-spacing: 0.03em;
+  }
+
+  /* Dot grid pattern background */
+  .dot-grid-bg {
+    background-image: radial-gradient(circle, oklch(0.38 0.12 255 / 0.12) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Timeline item */
+  .timeline-item {
+    position: relative;
+    padding-left: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.4rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: oklch(0.38 0.12 255);
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px oklch(0.38 0.12 255);
+  }
+  .timeline-item::after {
+    content: '';
+    position: absolute;
+    left: 3.5px;
+    top: 1.2rem;
+    bottom: 0;
+    width: 1px;
+    background: oklch(0.38 0.12 255 / 0.2);
+  }
+  .timeline-item:last-child::after {
+    display: none;
+  }
+
+  /* Fade-up animation class */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .fade-up {
+    animation: fadeUp 0.5s ease forwards;
+  }
+  .fade-up-delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .fade-up-delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .fade-up-delay-3 { animation-delay: 0.3s; opacity: 0; }
+  .fade-up-delay-4 { animation-delay: 0.4s; opacity: 0; }
+  .fade-up-delay-5 { animation-delay: 0.5s; opacity: 0; }
+
+  /* Sidebar nav link */
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: oklch(0.6 0.02 255);
+    transition: all 0.15s ease;
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+    text-decoration: none;
+  }
+  .nav-link:hover {
+    color: oklch(0.88 0.01 255);
+    background: oklch(1 0 0 / 0.06);
+  }
+  .nav-link.active {
+    color: oklch(0.88 0.01 255);
+    border-left-color: oklch(0.55 0.12 255);
+    background: oklch(1 0 0 / 0.08);
+  }
+}
